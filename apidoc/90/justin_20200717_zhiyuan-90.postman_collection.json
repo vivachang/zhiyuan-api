@@ -1,0 +1,1908 @@
+{
+	"info": {
+		"_postman_id": "f3be538b-79c1-4734-8e17-0f7f70747d40",
+		"name": "zhiyuan-90",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "仓库管理",
+			"item": [
+				{
+					"name": "仓库列表",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "name",
+								"value": "1",
+								"description": "仓库名称搜索 非必填",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://{{host}}/api/v1/storehouses?page=1&pageSize=15&name=12",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"storehouses"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "页数 非必传 默认1"
+								},
+								{
+									"key": "pageSize",
+									"value": "15",
+									"description": "每页条数 非必传 默认15"
+								},
+								{
+									"key": "name",
+									"value": "12",
+									"description": "仓库名 搜索 非必填"
+								}
+							]
+						},
+						"description": "仓库列表接口"
+					},
+					"response": []
+				},
+				{
+					"name": "仓库新增",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/api/v1/storehouses?name=afsdfsasdfsf123213&address=北京市海淀区科学研究院&desc=仓库描述",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"storehouses"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "afsdfsasdfsf123213"
+								},
+								{
+									"key": "address",
+									"value": "北京市海淀区科学研究院"
+								},
+								{
+									"key": "desc",
+									"value": "仓库描述"
+								}
+							]
+						},
+						"description": "仓库新增接口"
+					},
+					"response": []
+				},
+				{
+					"name": "客户编辑",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/api/v1/storehouses/2/edit",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"storehouses",
+								"2",
+								"edit"
+							]
+						},
+						"description": "编辑接口 获取数据"
+					},
+					"response": []
+				},
+				{
+					"name": "仓库更新",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "递四方速递",
+									"type": "text"
+								},
+								{
+									"key": "address",
+									"value": "sdajf实力坑爹福建省立刻",
+									"type": "text"
+								},
+								{
+									"key": "desc",
+									"value": "sdafdsf",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://{{host}}/api/v1/storehouses/1",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"storehouses",
+								"1"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "仓库12沙发斯蒂芬",
+									"disabled": true
+								},
+								{
+									"key": "address",
+									"value": "北京市海淀区科学研究院",
+									"disabled": true
+								},
+								{
+									"key": "desc",
+									"value": "仓库描述",
+									"disabled": true
+								}
+							]
+						},
+						"description": "仓库更新接口"
+					},
+					"response": []
+				},
+				{
+					"name": "仓库删除",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/api/v1/storehouses/1",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"storehouses",
+								"1"
+							]
+						},
+						"description": "仓库删除接口"
+					},
+					"response": []
+				},
+				{
+					"name": "更新状态",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/api/v1/storehouses/1/status?status=2",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"storehouses",
+								"1",
+								"status"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "2",
+									"description": "1开启 2关闭 默认1开启"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "0a59d05c-7e85-4edd-b88f-5828a298930c",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c7347e19-02d3-4687-855b-32139664f238",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "客户管理",
+			"item": [
+				{
+					"name": "客户列表",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/api/v1/customers?page=1&pageSize=15",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customers"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "页数 非必填 默认1 "
+								},
+								{
+									"key": "pageSize",
+									"value": "15",
+									"description": "每页条数 非必填 默认15"
+								},
+								{
+									"key": "name",
+									"value": "公司",
+									"description": "客户名称或简称 搜索项非必填",
+									"disabled": true
+								},
+								{
+									"key": "contact",
+									"value": "花花公子",
+									"description": "联系人搜索项 非必填",
+									"disabled": true
+								}
+							]
+						},
+						"description": "客户列表接口"
+					},
+					"response": []
+				},
+				{
+					"name": "客户新增",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/api/v1/customers?company_name=北京梁巨才外包公司&company_addr=梁巨才公司&type=0&email=763114070@qq.com&address=北京市海淀区科学研究院&memo=这是备注&contact=[{\"contact\":\"\\u6881\\u5de8\\u624d\",\"contact_phone\":\"13521339391\",\"job\":\"\\u8001\\u677f\"},{\"contact\":\"\\u6d4b\\u8bd5\\u7ec3\\u4e60\\u4eba\",\"contact_phone\":\"13521339391\",\"job\":\"\\u8001\\u677f\"}]",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customers"
+							],
+							"query": [
+								{
+									"key": "company_name",
+									"value": "北京梁巨才外包公司",
+									"description": "公司全称"
+								},
+								{
+									"key": "company_addr",
+									"value": "梁巨才公司",
+									"description": "公司简称  非必填"
+								},
+								{
+									"key": "logo",
+									"value": "1",
+									"description": "logo",
+									"disabled": true
+								},
+								{
+									"key": "type",
+									"value": "0",
+									"description": "对应字典表类型"
+								},
+								{
+									"key": "email",
+									"value": "763114070@qq.com",
+									"description": "邮箱 非必填"
+								},
+								{
+									"key": "address",
+									"value": "北京市海淀区科学研究院",
+									"description": "公司地址 非必填"
+								},
+								{
+									"key": "memo",
+									"value": "这是备注",
+									"description": "备注 非必填"
+								},
+								{
+									"key": "contact",
+									"value": "[{\"contact\":\"\\u6881\\u5de8\\u624d\",\"contact_phone\":\"13521339391\",\"job\":\"\\u8001\\u677f\"},{\"contact\":\"\\u6d4b\\u8bd5\\u7ec3\\u4e60\\u4eba\",\"contact_phone\":\"13521339391\",\"job\":\"\\u8001\\u677f\"}]"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "客户编辑",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/api/v1/customers/55/edit",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customers",
+								"55",
+								"edit"
+							]
+						},
+						"description": "编辑获取数据展示接口"
+					},
+					"response": []
+				},
+				{
+					"name": "客户更新",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/api/v1/customers/73?company_name=编辑北京梁巨才外包公司&company_addr=梁巨才公司&contact=[{\"contact\":\"花花公子\",\"contact_phone\":\"13521339391\",\"job\":\"\\u8001\\u677f\"},{\"contact\":\"\\u6d4b\\u8bd5\\u7ec3\\u4e60\\u4eba\",\"contact_phone\":\"13521339391\",\"job\":\"\\u8001\\u677f\"}]&type=0&email=763114070@qq.com&address=北京市海淀区科学研究院&memo=这是备注",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customers",
+								"73"
+							],
+							"query": [
+								{
+									"key": "company_name",
+									"value": "编辑北京梁巨才外包公司"
+								},
+								{
+									"key": "company_addr",
+									"value": "梁巨才公司"
+								},
+								{
+									"key": "contact",
+									"value": "[{\"contact\":\"花花公子\",\"contact_phone\":\"13521339391\",\"job\":\"\\u8001\\u677f\"},{\"contact\":\"\\u6d4b\\u8bd5\\u7ec3\\u4e60\\u4eba\",\"contact_phone\":\"13521339391\",\"job\":\"\\u8001\\u677f\"}]"
+								},
+								{
+									"key": "type",
+									"value": "0"
+								},
+								{
+									"key": "email",
+									"value": "763114070@qq.com"
+								},
+								{
+									"key": "address",
+									"value": "北京市海淀区科学研究院"
+								},
+								{
+									"key": "memo",
+									"value": "这是备注"
+								}
+							]
+						},
+						"description": "客户编辑提交保存接口"
+					},
+					"response": []
+				},
+				{
+					"name": "客户详情",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/api/v1/customers/2",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customers",
+								"2"
+							]
+						},
+						"description": "查看客户详情接口"
+					},
+					"response": []
+				},
+				{
+					"name": "客户详情项目列表",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/api/v1/customers/1/projects?page=2&pageSize=4",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"customers",
+								"1",
+								"projects"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "pageSize",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "客户管理接口",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "公共接口",
+			"item": [
+				{
+					"name": "上传文件",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/Users/Justin/Desktop/测试文件/测试图片/banner_3.jpg"
+								},
+								{
+									"key": "type",
+									"value": "1",
+									"description": "0图片 1视频 默认0",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://{{host}}/api/v1/public/file",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"public",
+								"file"
+							],
+							"query": [
+								{
+									"key": "file",
+									"value": "",
+									"disabled": true
+								}
+							]
+						},
+						"description": "上传文件接口"
+					},
+					"response": []
+				},
+				{
+					"name": "客户列表",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/api/v1/public/customers",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"public",
+								"customers"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "需要登录权限 但无需校验权限接口",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "订单管理",
+			"item": [
+				{
+					"name": "订单统计",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/api/v1/orders/count?type=3",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"count"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "3",
+									"description": "1本周 2本月 3本年 默认2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "订单列表",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/api/v1/orders",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "信息",
+									"description": "公司名称",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "3",
+									"description": " 1待付款 2已付款 3部分付款 4已退款 5已取消",
+									"disabled": true
+								},
+								{
+									"key": "time",
+									"value": "2020-07-06",
+									"disabled": true
+								},
+								{
+									"key": "money",
+									"value": "0-2000",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "新增订单",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/api/v1/orders?cid=73&num=10&money=1000.00",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders"
+							],
+							"query": [
+								{
+									"key": "cid",
+									"value": "73",
+									"description": "客户id"
+								},
+								{
+									"key": "num",
+									"value": "10",
+									"description": "数量"
+								},
+								{
+									"key": "money",
+									"value": "1000.00",
+									"description": "金额"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "订单编辑",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/api/v1/orders/49/edit",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"49",
+								"edit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "订单更新",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/api/v1/orders/49?cid=73&num=15&money=15000.00",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"49"
+							],
+							"query": [
+								{
+									"key": "cid",
+									"value": "73"
+								},
+								{
+									"key": "num",
+									"value": "15"
+								},
+								{
+									"key": "money",
+									"value": "15000.00"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "订单查看",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/api/v1/orders/100",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"100"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "发货",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/api/v1/orders/47/send?express_name=顺丰快递&express_number=123213123213213213213&data=[{\"number\":\"123456789\"},{\"number\":\"123456790\"},{\"number\":\"123456791\"}]",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"47",
+								"send"
+							],
+							"query": [
+								{
+									"key": "express_name",
+									"value": "顺丰快递"
+								},
+								{
+									"key": "express_number",
+									"value": "123213123213213213213"
+								},
+								{
+									"key": "data",
+									"value": "[{\"number\":\"123456789\"},{\"number\":\"123456790\"},{\"number\":\"123456791\"}]"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取消订单",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/api/v1/orders/45/cancel",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"45",
+								"cancel"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "项目管理",
+			"item": [
+				{
+					"name": "项目统计",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://{{host}}/api/v1/projects/count?type=3",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"projects",
+								"count"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "3",
+									"description": " 1本周 2本月 3今年 不传默认2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "项目列表",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/api/v1/projects?pageSize=20&page=1",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"projects"
+							],
+							"query": [
+								{
+									"key": "pageSize",
+									"value": "20",
+									"description": "每页条数"
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"description": "页数"
+								},
+								{
+									"key": "status",
+									"value": "6",
+									"description": "状态 1未开始 2施工中 3交付中 4维护中 5暂停 已结束",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "项目",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "项目新增",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "项目新sfd1",
+									"description": "项目名称",
+									"type": "text"
+								},
+								{
+									"key": "customer_id",
+									"value": "73",
+									"description": "客户id",
+									"type": "text"
+								},
+								{
+									"key": "hcho",
+									"value": "1.333",
+									"description": "甲醛",
+									"type": "text"
+								},
+								{
+									"key": "tvoc",
+									"value": "8.233",
+									"description": "TVOC",
+									"type": "text"
+								},
+								{
+									"key": "stages",
+									"value": "[{\"stage_name\":\"\\u65bd\\u5de5\\u9636\\u6bb51\",\"start_date\":\"2020-03-12\",\"end_date\":\"2020-03-20\",\"threshold_id\":1,\"stage\":1,\"default\":1},{\"stage_name\":\"\\u65bd\\u5de5\\u9636\\u6bb52\",\"start_date\":\"2020-03-12\",\"end_date\":\"2020-03-20\",\"threshold_id\":1,\"stage\":1,\"default\":0},{\"stage_name\":\"\\u4ea4\\u4ed8\\u9636\\u6bb51\",\"start_date\":\"2020-05-12\",\"end_date\":\"2020-05-20\",\"threshold_id\":1,\"stage\":1,\"default\":1},{\"stage_name\":\"\\u4ea4\\u4ed8\\u9636\\u6bb52\",\"start_date\":\"2020-05-12\",\"end_date\":\"2020-05-20\",\"threshold_id\":1,\"stage\":1,\"default\":0},{\"stage_name\":\"\\u7ef4\\u62a4\\u9636\\u6bb51\",\"start_date\":\"2020-06-12\",\"end_date\":\"2020-06-20\",\"threshold_id\":1,\"stage\":1,\"default\":1},{\"stage_name\":\"\\u7ef4\\u62a4\\u9636\\u6bb52\",\"start_date\":\"2020-06-12\",\"end_date\":\"2020-06-20\",\"threshold_id\":1,\"stage\":1,\"default\":0}]",
+									"description": "阶段信息 json格式",
+									"type": "text"
+								},
+								{
+									"key": "areas",
+									"value": "[{\"area_name\":\"\\u56fe\\u7eb81\",\"file\":1},{\"area_name\":\"\\u56fe\\u7eb82\",\"file\":2},{\"area_name\":\"\\u56fe\\u7eb83\",\"file\":3}]",
+									"description": "区域信息 json格式",
+									"type": "text"
+								},
+								{
+									"key": "stages3",
+									"value": "[{\"name\":\"\\u7ef4\\u62a4\\u9636\\u6bb51\",\"start_date\":\"2020-03-12\",\"end_date\":\"2020-03-20\",\"0\":1},{\"name\":\"\\u7ef4\\u62a4\\u9636\\u6bb52\",\"start_date\":\"2020-03-21\",\"end_date\":\"2020-03-25\",\"0\":1}]",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://{{host}}/api/v1/projects",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "项目查看",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/api/v1/projects/7",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"projects",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "项目编辑",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/api/v1/projects/7/edit",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"projects",
+								"7",
+								"edit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "项目更新",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/api/v1/projects/7?name=项目新增12345&customer_id=73&hcho=1.333&tvoc=8.233&stages=[{\"stage_name\":\"\\u65bd\\u5de5\\u9636\\u6bb51\",\"start_date\":\"2020-03-12\",\"end_date\":\"2020-03-20\",\"threshold_id\":1,\"stage\":1,\"default\":1},{\"stage_name\":\"\\u65bd\\u5de5\\u9636\\u6bb52\",\"start_date\":\"2020-03-12\",\"end_date\":\"2020-03-20\",\"threshold_id\":1,\"stage\":1,\"default\":0},{\"stage_name\":\"\\u4ea4\\u4ed8\\u9636\\u6bb51\",\"start_date\":\"2020-05-12\",\"end_date\":\"2020-05-20\",\"threshold_id\":1,\"stage\":1,\"default\":1},{\"stage_name\":\"\\u4ea4\\u4ed8\\u9636\\u6bb52\",\"start_date\":\"2020-05-12\",\"end_date\":\"2020-05-20\",\"threshold_id\":1,\"stage\":1,\"default\":0},{\"stage_name\":\"\\u7ef4\\u62a4\\u9636\\u6bb51\",\"start_date\":\"2020-06-12\",\"end_date\":\"2020-06-20\",\"threshold_id\":1,\"stage\":1,\"default\":1},{\"stage_name\":\"\\u7ef4\\u62a4\\u9636\\u6bb52\",\"start_date\":\"2020-06-12\",\"end_date\":\"2020-06-20\",\"threshold_id\":1,\"stage\":1,\"default\":0}]&areas=[{\"area_name\":\"\\u56fe\\u7eb81\",\"file\":1},{\"area_name\":\"\\u56fe\\u7eb82\",\"file\":2},{\"area_name\":\"\\u56fe\\u7eb83\",\"file\":3}]",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"projects",
+								"7"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "项目新增12345"
+								},
+								{
+									"key": "customer_id",
+									"value": "73"
+								},
+								{
+									"key": "hcho",
+									"value": "1.333"
+								},
+								{
+									"key": "tvoc",
+									"value": "8.233"
+								},
+								{
+									"key": "stages",
+									"value": "[{\"stage_name\":\"\\u65bd\\u5de5\\u9636\\u6bb51\",\"start_date\":\"2020-03-12\",\"end_date\":\"2020-03-20\",\"threshold_id\":1,\"stage\":1,\"default\":1},{\"stage_name\":\"\\u65bd\\u5de5\\u9636\\u6bb52\",\"start_date\":\"2020-03-12\",\"end_date\":\"2020-03-20\",\"threshold_id\":1,\"stage\":1,\"default\":0},{\"stage_name\":\"\\u4ea4\\u4ed8\\u9636\\u6bb51\",\"start_date\":\"2020-05-12\",\"end_date\":\"2020-05-20\",\"threshold_id\":1,\"stage\":1,\"default\":1},{\"stage_name\":\"\\u4ea4\\u4ed8\\u9636\\u6bb52\",\"start_date\":\"2020-05-12\",\"end_date\":\"2020-05-20\",\"threshold_id\":1,\"stage\":1,\"default\":0},{\"stage_name\":\"\\u7ef4\\u62a4\\u9636\\u6bb51\",\"start_date\":\"2020-06-12\",\"end_date\":\"2020-06-20\",\"threshold_id\":1,\"stage\":1,\"default\":1},{\"stage_name\":\"\\u7ef4\\u62a4\\u9636\\u6bb52\",\"start_date\":\"2020-06-12\",\"end_date\":\"2020-06-20\",\"threshold_id\":1,\"stage\":1,\"default\":0}]"
+								},
+								{
+									"key": "areas",
+									"value": "[{\"area_name\":\"\\u56fe\\u7eb81\",\"file\":1},{\"area_name\":\"\\u56fe\\u7eb82\",\"file\":2},{\"area_name\":\"\\u56fe\\u7eb83\",\"file\":3}]"
+								},
+								{
+									"key": "stages3",
+									"value": "[{\"name\":\"\\u7ef4\\u62a4\\u9636\\u6bb51\",\"start_date\":\"2020-03-12\",\"end_date\":\"2020-03-20\",\"0\":1},{\"name\":\"\\u7ef4\\u62a4\\u9636\\u6bb52\",\"start_date\":\"2020-03-21\",\"end_date\":\"2020-03-25\",\"0\":1}]",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "项目检测点管理",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/api/v1/projects/7/positions",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"projects",
+								"7",
+								"positions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "点位新增",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "project_id",
+									"value": "7",
+									"type": "text"
+								},
+								{
+									"key": "number",
+									"value": "12342312",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "测试点位",
+									"type": "text"
+								},
+								{
+									"key": "device_id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "area_id",
+									"value": "1",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://{{host}}/api/v1/position",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"position"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "点位删除",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/api/v1/position/1",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"position",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "点位更新",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "project_id",
+									"value": "7",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "number",
+									"value": "12342312",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "name",
+									"value": "测试点位",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "device_id",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "area_id",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://{{host}}/api/v1/position/1?project_id=1&name=修改点位1111&number=123123213&device_id=123&area_id=123&status=2",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"position",
+								"1"
+							],
+							"query": [
+								{
+									"key": "project_id",
+									"value": "1"
+								},
+								{
+									"key": "name",
+									"value": "修改点位1111"
+								},
+								{
+									"key": "number",
+									"value": "123123213"
+								},
+								{
+									"key": "device_id",
+									"value": "123"
+								},
+								{
+									"key": "area_id",
+									"value": "123"
+								},
+								{
+									"key": "status",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "更新状态",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/api/v1/position/2/status?status=2",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"position",
+								"2",
+								"status"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "2",
+									"description": "1启用 2停用"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "财务管理",
+			"item": [
+				{
+					"name": "财务统计",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/api/v1/finance/count?type=3",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"finance",
+								"count"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "财务列表",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/api/v1/finance?pageSize=20&page=1",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"finance"
+							],
+							"query": [
+								{
+									"key": "pageSize",
+									"value": "20"
+								},
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "财务详情",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/api/v1/finance/100",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"finance",
+								"100"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "收款/退款",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://{{host}}/api/v1/finance/100?money=1000&type=1&pay_type=1&file=1,2&date=2020-07-18",
+							"protocol": "http",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"finance",
+								"100"
+							],
+							"query": [
+								{
+									"key": "money",
+									"value": "1000",
+									"description": "金额"
+								},
+								{
+									"key": "type",
+									"value": "1",
+									"description": "1收款 2退款"
+								},
+								{
+									"key": "pay_type",
+									"value": "1",
+									"description": "1对公转账 2微信 3支付宝 4现金 5其他"
+								},
+								{
+									"key": "file",
+									"value": "1,2"
+								},
+								{
+									"key": "date",
+									"value": "2020-07-18",
+									"description": "收款退款日期"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "用户注册",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "zhangsan4",
+							"type": "text"
+						},
+						{
+							"key": "phone",
+							"value": "17780510694",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "123456",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://{{host}}/api/v1/users",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "登录获取token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e17392da-796f-421b-81f4-e3a26574700c",
+						"exec": [
+							"var data=JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"token\",data.access_token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "sequi_natus",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "secret",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://{{host}}/api/v1/authorizations",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"authorizations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT刷新token",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC96aGl5dWFuLnRlc3RcL2FwaVwvdjFcL2F1dGhvcml6YXRpb25zIiwiaWF0IjoxNTkxNzgxNTIwLCJleHAiOjE1OTE3ODUxMjAsIm5iZiI6MTU5MTc4MTUyMCwianRpIjoiN2NVR1lFTXVRQjhxcU53eiIsInN1YiI6NiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.erkr4xPoB4wfnJv0MmHk7P6yJ05V0o5Rtm7G5ueVBOE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}/api/v1/authorizations/current",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"authorizations",
+						"current"
+					]
+				},
+				"description": "任何一个永久有效的 token 都是相当危险的，通过任意方式泄露了 token 之后，用户的相关信息都有可能被利用。为了安全考虑令牌会有过期时间，过期时间一般也不会太长。我们提供了刷新的机制，只要在可刷新的时间范围内，即使 token 过期了，依然可以调用接口，换取一个新的 token。这对于 APP 长期保持用户登录状态是十分重要的。"
+			},
+			"response": []
+		},
+		{
+			"name": "删除token",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC96aGl5dWFuLnRlc3RcL2FwaVwvdjFcL2F1dGhvcml6YXRpb25zXC9jdXJyZW50IiwiaWF0IjoxNTkxNzgxNTIwLCJleHAiOjE1OTE3ODUxNDUsIm5iZiI6MTU5MTc4MTU0NSwianRpIjoiaW0ybE9lRGdpQTJ3RnFwZiIsInN1YiI6NiwicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.-4SRXBeLcibG8RSc-8WNpOVq3UcbWXRzaEp4alzJS2s",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://{{host}}/api/v1/authorizations/current",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"authorizations",
+						"current"
+					]
+				},
+				"description": "删除 token 的场景就是用户退出 APP，将当前的 token 禁用掉，\n返回的状态码是 204，因为对于删除这类的事件，只需要告诉客户端成功了，没什么需要返回的信息。"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
