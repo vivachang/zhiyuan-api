@@ -13,7 +13,7 @@ class OrdersDevices extends Model
 
 
     protected $fillable = [
-        'good_id','order_id', 'number','customer_id'
+        'good_id','order_id', 'device_id','customer_id'
     ];
 
 
@@ -35,6 +35,14 @@ class OrdersDevices extends Model
      */
     public function orders(){
         return $this->belongsTo(Orders::class, 'order_id', 'id');
+    }
+
+    /**
+     * 关联设备表
+     * @return mixed
+     */
+    public function device(){
+        return $this->belongsTo(Device::class, 'device_id', 'id');
     }
 
 }

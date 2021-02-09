@@ -11,7 +11,18 @@ class Orders extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'order_number','gid', 'cid','num','money','order_status','send_goods_status','express_name','express_number'
+        'order_number',
+        'gid',
+        'cid',
+        'num',
+        'price',
+        'type',
+        'invoice',
+        'money',
+        'order_status',
+        'send_goods_status','
+        express_name',
+        'express_number'
     ];
 
 

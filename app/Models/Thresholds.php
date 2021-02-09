@@ -9,9 +9,10 @@ class Thresholds extends Model
 {
     //
     use SoftDeletes;
+    protected  $table = 'thresholds';
 
     protected $fillable = [
-        'name','status','thresholdinfo'
+        'name','status','thresholdinfo','descript'
     ];
 
 

@@ -11,7 +11,7 @@ class Projects extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'number','name', 'customer_id','address','hcho','tvoc','status'
+        'number','name', 'customer_id','address','hcho','tvoc','status','setting_flg','project_manage_name','project_manage_tel','device_manage_name','device_manage_tel','memo'
     ];
 
     /**
@@ -73,4 +73,22 @@ class Projects extends Model
     public function position(){
         return $this->hasMany(Position::class, 'project_id', 'id');
     }
+
+    /**
+     * 关联预警阈值表
+     * @return mixed
+     */
+    public function thresholds(){
+        return $this->hasMany(ProjectsThresholds::class, 'project_id', 'id');
+    }
+    /**
+     * 关联预警阈值表
+     * @return mixed
+     */
+    public function waringsetting(){
+        return $this->hasMany(ProjectsWaringSetting::class, 'project_id', 'id');
+    }
+
+
+
 }

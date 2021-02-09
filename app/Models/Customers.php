@@ -11,7 +11,7 @@ class Customers extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'company_name','company_addr', 'type','logo','email','address','memo'
+        'company_name','company_addr', 'type','logo','email','address','memo','template_ids'
     ];
 
     /**
@@ -36,5 +36,13 @@ class Customers extends Model
      */
     public function logos(){
         return $this->hasOne(Files::class, 'id', 'logo');
+    }
+
+    /**
+     * 关联用户表
+     * @return mixed
+     */
+    public function user(){
+        return $this->hasOne(User::class, 'customer_id', 'id');
     }
 }

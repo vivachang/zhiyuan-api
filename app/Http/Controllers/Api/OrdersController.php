@@ -7,6 +7,8 @@ use App\Http\Requests\Api\OrdersDevicesRequest;
 use App\Http\Requests\Api\OrdersRequest;
 use App\Http\Resources\CustomersResources;
 use App\Http\Resources\OrdersResources;
+use App\Models\Device;
+use App\Models\Finance;
 use App\Models\FinanceLog;
 use App\Models\Orders;
 use Illuminate\Http\Request;
@@ -17,34 +19,128 @@ class OrdersController extends Controller
 
     /**
      * 统计订单数
-     * $type  1本周 2本月 3今年 默认2
+     * $type  1本周 2本月 3今年 4全部 默认2
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
     public function count(Request $request){
-        $date = $this->returnDate($request->type ?? 2);
-        //订单总数
-        $order_count = Orders::whereNotIn('order_status',[1,2,3])->whereBetween('created_at',$date)->count();
-        //已付款订单数
-        $order_pay_count = Orders::where('order_status',2)->whereBetween('created_at',$date)->count();
-        //待付款订单数
-        $order_no_pay_count = $order_count - $order_pay_count;
+        $where = [];
+        $request->user()->customer_id && $where[] = ['cid',$request->user()->customer_id];
+        if($request->type && in_array($request->type,[1,2,3])){
+            $date = $this->returnDate($request->type);
+            $where[] = ['created_at','>',$date[0]];
+            $where[] = ['created_at','<',$date[1]];
+        }
         //订单总金额
-        $order_money_count = Orders::whereNotIn('order_status',[1,2,3])->whereBetween('created_at',$date)->sum('money');
-        //已付订单总金额
-        $order_pay_money_count = Orders::where('order_status',2)->whereBetween('created_at',$date)->sum('money');
-        //待付订单总金额
-        $order_no_pay_money_count = $order_money_count - $order_pay_money_count;
+        $order_money_count = Orders::where($where)->whereNotIn('order_status',[5])->sum('money');
+        //订单总数
+        $order_count = Orders::where($where)->whereNotIn('order_status',[5])->count();
+        //20200926需求变更
+        //已付款订单
+        $order_pay_count = Orders::where($where)->where('order_status',2)->count();
+        //部分付款订单
+        $order_section_pay_count = Orders::where($where)->where('order_status',3)->count();
+        //待付款订单
+        $order_wait_count = Orders::where($where)->where('order_status',1)->count();
+        //已付款（实收的金额）
+        $order_payment_money = 0 ;
+        $order_payment = Orders::where($where)->whereIn('order_status',[2,3,6])->get();
+        foreach ($order_payment as $k => $v){
+            switch ($v->order_status){
+                case 2:
+                    $order_payment_money += $v->money;
+                    break;
+                case 3:
+                    $money = FinanceLog::where('order_id',$v->id)->where("type",1)->sum('money');
+                    $order_payment_money += $money;
+                    break;
+                case 6:
+                    $log = FinanceLog::where("order_id",$v->id)->groupBy('type')->select(['type',DB::raw('SUM(money) as money')])->get();
+                    foreach ($log as $k1 => $v1){
+                        if($v1->type == 1){
+                            $order_payment_money += $v1->money;
+                        }else{
+                            $order_payment_money -= $v1->money;
+                        }
+                    }
+                    break;
+            }
+        }
+        //待付款
+        $order_wait_money = Orders::where($where)->where('order_status',1)->sum('money');
+        //已退款
+        $order_refund = Orders::where($where)->whereIn('order_status',[4,6])->get(['id']);
+        $order_refund_money = FinanceLog::whereIn('order_id',$order_refund)->where('type',2)->sum('money');
+        return response()->json([
+            //订单总数
+            'order_count'                   => $order_count,
+            //已付款订单
+            'order_pay_count'               => $order_pay_count,
+            //部分付款订单
+            'order_section_pay_count'       => $order_section_pay_count,
+            //待付款订单
+            'order_wait_count'              => $order_wait_count,
+            //订单总金额
+            'order_money_count'             => sprintf("%.2f",$order_money_count),
+            //已付款（实收的金额）
+            'order_payment_money'           => sprintf("%.2f",$order_payment_money),
+            //待付款
+            'order_wait_money'              => sprintf("%.2f",$order_wait_money),
+            //已退款
+            'order_refund_money'            => sprintf("%.2f",$order_refund_money),
+        ]);
 
+
+        /*$date = $this->returnDate($request->type ?? 2);
+        $where = [];
+        $request->user()->customer_id && $where[] = ['cid',$request->user()->customer_id];
+
+        //待付款订单数
+        $order_no_pay_count = Orders::where($where)->whereBetween('created_at',$date)->where('order_status',1)->count();
+
+        //已付订单总金额
+        $order_pay_money_count = 0;
+        $order_pay = Orders::where($where)->whereBetween('created_at',$date)->whereIn('order_status',[2,3,4,6])->get();
+        if($order_pay){
+            foreach ($order_pay as $k => $v){
+                if($v->order_status == 2){
+                    $order_pay_money_count += $v->money;
+                }else{
+                    $log = FinanceLog::where("order_id",$v->id)->get();
+                    foreach ($log as $k1 => $v1){
+                        if($v1->type == 1){
+                            $order_pay_money_count +=  $v1->money;
+                        }else{
+                            $order_pay_money_count -=  $v1->money;
+                        }
+                    }
+
+                }
+            }
+        }
+        //待付订单总金额
+        $order_no_pay_money_count = 0;
+        $order_no_pay_money = Orders::where($where)->whereBetween('created_at',$date)->whereIN('order_status',[1,3])->whereBetween('created_at',$date)->get();
+        if($order_no_pay_money){
+            foreach ($order_no_pay_money as $k => $v){
+                $order_no_pay_money_count  +=  $v->money;
+                if($v->order_status == 3){
+                    $log = FinanceLog::where("order_id",$v->id)->get();
+                    foreach ($log as $k1 => $v1){
+                        $order_no_pay_money_count -= $v1->money;
+                    }
+                }
+            }
+        }
         return response()->json([
                 'order_count'           => $order_count,
                 'order_pay_count'       => $order_pay_count,
                 'order_no_pay_count'    => $order_no_pay_count,
-                'order_money_count'         => $order_money_count,
-                'order_pay_money_count'     => $order_pay_money_count,
-                'order_no_pay_money_count'  => $order_no_pay_money_count,
-        ]);
+                'order_money_count'         => sprintf("%.2f",$order_money_count),
+                'order_pay_money_count'     => sprintf("%.2f",$order_pay_money_count),
+                'order_no_pay_money_count'  => sprintf("%.2f",$order_no_pay_money_count),
+        ]);*/
     }
 
     /**
@@ -55,6 +151,7 @@ class OrdersController extends Controller
     public function index(Orders $orders , Request $request)
     {
         $orders = $orders->with('customs');
+        $request->user()->customer_id && $orders = $orders->where('cid',$request->user()->customer_id);
         if($request->money){
             $arr = explode('-',$request->money);
             if(count($arr) == 1){
@@ -93,7 +190,7 @@ class OrdersController extends Controller
      */
     public function show(Orders $order)
     {
-        return new OrdersResources($order->load(['devices','customs']));
+        return new OrdersResources($order->load(['devices','devices.device','customs']));
     }
 
     /**
@@ -133,7 +230,12 @@ class OrdersController extends Controller
             $request['send_goods_status'] = 2;
             $order->update($request->all());
             $order->devices()->delete();
+            $data = json_decode($request->data,true);
             $order->devices()->createMany(json_decode($request->data,true));
+            //修改设备表中状态为 已出库 同时绑定客户关系 8-31沟通
+            foreach ($data as $k => $v){
+                Device::where('id',$v['device_id'])->update(['store_status' => 2,'customer_id' => $order->cid,'type' => $order->type ]);
+            }
         });
         return response(new OrdersResources($order->load('devices')),201);
     }

@@ -45,6 +45,17 @@ class ProjectsRequest extends FormRequest
                                 break;
                             }
                         }
+                        //开始时间要小于结束时间
+                        if($v['start_date'] >= $v['end_date']){
+                            return $fail('阶段'.$k.'阶段开始时间不能小于结束时间,请选择正确时间段');
+                        }
+                        //阶段开始时间要大于上个阶段时间
+                        if($k > 0){
+                            if($v['start_date']<=$data[$k-1]['end_date']){
+                                return $fail('阶段'.($k-1).'与'.($k).'两阶段时间不能重叠,请选择正确时间段');
+                            }
+                        }
+
                     }
                 }
             ],
@@ -54,7 +65,7 @@ class ProjectsRequest extends FormRequest
                     if(!is_array($data)){
                         return $fail($attribute.' is invalid.');
                     }
-                    $arr = ['area_name','file'];
+                    $arr = ['area_name'];
                     foreach ($data as $k => $v){
                         foreach ($arr as $k1 => $v1){
                             if(!isset($v[$v1]) || empty($v[$v1])){

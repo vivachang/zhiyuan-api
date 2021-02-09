@@ -27,7 +27,7 @@ class ProjectsPositions extends Model
      * @return mixed
      */
     public function device(){
-        return $this->hasOne(OrdersDevices::class, 'id', 'device_id');
+        return $this->hasOne(Device::class, 'id', 'device_id');
     }
 
     /**
@@ -36,6 +36,14 @@ class ProjectsPositions extends Model
      */
     public function location(){
         return $this->hasOne(Location::class, 'id', 'position_id');
+    }
+
+    /**
+     * 关联点位坐标表
+     * @return mixed
+     */
+    public function project(){
+        return $this->hasOne(Projects::class, 'id', 'project_id');
     }
 
 }

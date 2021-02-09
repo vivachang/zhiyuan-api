@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api;
 
+use App\Models\Position;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PositionsRequest extends FormRequest
@@ -23,14 +24,22 @@ class PositionsRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->route('position') ?  $this->route('position')->id : 0;
         return [
             'project_id'    => 'required',
             'number'        => 'required',
             'name'          => 'required',
-//            'device_id'     => 'required',
             'area_id'       => 'required',
-//            'left'          =>  'required',
-//            'top'           =>  'required',
+            //'left'          => 'required',
+            //'top'           => 'top',
+            'device_id'     => ['required',
+                function ($attribute, $value, $fail) use($id) {
+                    $flg = Position::where('id','<>',$id)->where('device_id',$value)->where('status',1)->first();
+                    if($flg){
+                        return $fail('设备已被绑定');
+                    }
+                }
+            ]
         ];
     }
 }

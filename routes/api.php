@@ -8,7 +8,7 @@ Route::prefix('v1')
 
         Route::middleware('throttle:' . config('api.rate_limits.sign'))
             ->group(function () {
-            
+
             // 登录
             Route::post('authorizations', 'AuthorizationsController@store')
                 ->name('api.authorizations.store');
@@ -22,17 +22,29 @@ Route::prefix('v1')
             Route::get('/positiondatas/export', 'PositiondatasController@export')
                 ->name('PositiondatasController.export');
 
-        
+
         Route::middleware('throttle:' . config('api.rate_limits.access'))
             ->group(function () {
-                // 游客可以访问的接口
-                
+                               // 游客可以访问的接口
+
                 Route::middleware('auth:api')->group(function() {
                     // 登录后可以访问的接口
                     // 用户新增
                     Route::resource('users', 'UsersController')->only([
                         'store', 'update', 'index'
                     ]);
+                    // 当前登录用户信息
+                    Route::get('user/check', 'UsersController@check')
+                        ->name('user.check');
+
+                    Route::get('user/checkpassword', 'UsersController@checkpassword')
+                        ->name('user.checkpassword');
+
+
+                    // 当前登录用户信息
+                    Route::get('user', 'UsersController@me')
+                        ->name('user.show');
+
                     //角色列表
                     Route::get('/role', 'RoleController@index')
                     ->name('role.index');
@@ -40,7 +52,7 @@ Route::prefix('v1')
                     Route::get('/permissions', 'PermissionsController@index')
                     ->name('permissions.index');
                      // 当前登录用户权限
-                    Route::get('user', 'PermissionsController@userIndex')
+                    Route::get('userpermissions', 'PermissionsController@userIndex')
                         ->name('user.permissions');
                     //角色的权限列表
                     Route::get('/role/{role}/permissions', 'PermissionsController@roleIndex')
@@ -71,7 +83,7 @@ Route::prefix('v1')
                         ->name('position.status');
                     //点位新增 点位编辑 点位更新 点位删除
                     Route::resource('position', 'PositionsController')->only([
-                        'store', 'update','destroy'
+                        'store', 'update'
                     ]);
                     //获取该区域坐标
                     Route::get('projects/{project}/area/{area}/location', 'LocationController@location')
@@ -130,14 +142,69 @@ Route::prefix('v1')
                     Route::get('finance/{finance}/financeLog', 'FinanceController@financeLog')
                         ->name('finance.financeLog');
 
+                    //设备导入
+                    Route::post('device/import','DeviceController@import')
+                        ->name('device/import');
+                    //设备统计
+                    Route::get('device/count','DeviceController@count')
+                        ->name('device/count');
+                    //设备开关 1开 2关
+                    Route::patch('device/{device}/state','DeviceController@state')
+                        ->name('device/state');
+                    //收回
+                    Route::put('device/{device}/cancel','DeviceController@cancel')
+                        ->name('device/cancel');
+                    //设备管理
+                    Route::resource('device','DeviceController')->only([
+                        'index' , 'store' , 'update' , 'show'
+                    ]);
 
                     //订单列表 订单新增  订单编辑 订单更新 订单详情
                     Route::resource('finance', 'FinanceController')->only([
                         'index','update','show'
                     ]);
 
+                    //数据报表
+                    Route::resource('data','DataController')->only([
+                        'index'
+                    ]);
+
+
+                    //预评估导入
+                    Route::post('preinstall/{project}/import','PreinstallController@import')
+                        ->name('preinstall/import');
+                    //预评估管理
+                    Route::resource('preinstall','PreinstallController')->only([
+                        'index' , 'show'
+                    ]);
+
+
                     //公共接口
                     Route::group(['prefix' => 'public'],function () {
+                        //获取登录用户最新添加的点位id和项目id
+                        Route::get('getNewPosition','PublicController@getNewPosition')
+                            ->name('public.getNewPosition');
+                        //点位获取最新监测数据
+                        Route::get('getNewPositionData','PublicController@getNewPositionData')
+                            ->name('public.getNewPositionData');
+                        Route::get('getNewPositionDatas','PublicController@getNewPositionDatas')
+                            ->name('public.getNewPositionDatas');
+
+                        //首页数据统计 项目总数 点位总数 设备总数
+                        Route::get('getIndexCount','PublicController@getIndexCount')
+                            ->name('public.getIndexCount');
+                        //首页项目总数
+                        Route::get('getIndexNewProjectCount','PublicController@getIndexNewProjectCount')
+                            ->name('public.getIndexNewProjectCount');
+                        //首页销售订单统计表
+                        Route::get('getIndexOrderSale','PublicController@getIndexOrderSale')
+                            ->name('public.getIndexOrderSale');
+                        //首页大屏右侧项目列表
+                        Route::get('getIndexProjectList','PublicController@getIndexProjectList')
+                            ->name('public.getIndexProjectList');
+                        //首页大屏右侧项目某个区域的列表
+                        Route::get('getIndexProjectAreaList','PublicController@getIndexProjectAreaList')
+                            ->name('public.getIndexProjectAreaList');
                         //文件上传
                         Route::resource('file', 'PublicController')->only([
                             'store'
@@ -154,12 +221,17 @@ Route::prefix('v1')
                         //项目对应设备列表
                         Route::get('devices','PublicController@devices')
                             ->name('public.devices');
+                        //获取所有正常未绑定客户的设备列表
+                        Route::get('getAllNoCustomerDevicesList','PublicController@getAllNoCustomerDevicesList')
+                            ->name('public.getAllNoCustomerDevicesList');
                     });
                     //监测点原始数据
                     Route::get('/positiondatas', 'PositiondatasController@index')
                         ->name('PositiondatasController.index');
 
-
+                    //监测点原始数据
+                    Route::get('/positiondatashead', 'PositiondatasController@indexHead')
+                        ->name('PositiondatasController.indexHead');
                     //故障排查
                     Route::get('breakdown','BreakdownController@index')
                         ->name('breakdown.index');
@@ -167,8 +239,55 @@ Route::prefix('v1')
                     //消息列表
                     Route::get('message','MessageController@index')
                         ->name('message.index');
+                    //消息删除
+                    Route::delete('message/{message}','MessageController@destroy')
+                        ->name('message.destroy');
+                    //消息未读总条数
+                    Route::get('message/noreadcount','MessageController@noread')
+                        ->name('message.noreadcount');
+                    // 数据字典
+                    Route::resource('dictories', 'DictoriesController')->only([
+                        'update', 'index'
+                    ]);
+                    // 标准阈值
+                    Route::resource('thresholds', 'ThresholdsController')->only([
+                        'store', 'update', 'index','show'
+                    ]);
 
+                    // 设置项目的阈值
+                    Route::post('projects/{project}/thresholds', 'ProjectsThresholdsController@store')
+                        ->name('projects.thresholds.store');
+                    // 修改项目阶段阈值
+                    Route::patch('projects/{project}/thresholds/{projectsthreshold}', 'ProjectsThresholdsController@update')
+                        ->name('projects.thresholds.update');
 
+                    // 设置项目的预警条件
+                    Route::post('projects/{project}/waringsetting', 'ProjectsWaringSettingController@store')
+                        ->name('projects.waringsetting.store');
+                    // 修改项目的预警条件
+                    Route::patch('projects/{project}/waringsetting/{waringsetting}', 'ProjectsWaringSettingController@update')
+                        ->name('projects.waringsetting.update');
+
+                    //预警警报列表
+                    Route::get('warnigs','WarnigsController@index')
+                        ->name('warnigs.index');
+                    //预警警报详情
+                    Route::get('warnigs/{warnig}','WarnigsController@show')
+                        ->name('warnigs.show');
+
+                    // 预警警报用户消息列表
+                    Route::resource('warnigssms', 'WarnigsSmsController')->only([
+                        'index'
+                    ]);
+                    // 发送预警警报的消息
+                    Route::post('warnigs/{warnigs}/warnigssms', 'WarnigsSmsController@store')
+                        ->name('warnigs.warnigssms.store');
+                    // 修改预警警报消息
+                    Route::patch('warnigs/{warnigs}/warnigssms/{warnigssms}', 'WarnigsSmsController@update')
+                        ->name('warnigs.warnigssms.update');
+                    // 某条预警的最新解决方案
+                    Route::get('warnigs/{warnigs}/lastsms', 'WarnigsSmsController@lastsms')
+                        ->name('warnigs.warnigssms.lastsms');
 
 
                 });

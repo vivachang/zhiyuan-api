@@ -21,7 +21,7 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
     protected $fillable = [
-        'name','phone', 'truename','password','type','belongs_customer','roles','status'
+        'name','phone', 'truename','password','type','customer_id','roles','status','img','show_area_id','show_project_id','show_position_id','template_id'
     ];
 
     protected $hidden = [
@@ -44,11 +44,15 @@ class User extends Authenticatable implements JWTSubject
         }
 
         $this->attributes['password'] = $value;
-        
+
     }
     public function customer()
     {
         return $this->belongsTo(Customers::class);
+    }
+    public function img()
+    {
+        return $this->hasOne(Files::class, 'id', 'img');
     }
 
 }

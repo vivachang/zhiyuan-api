@@ -10,9 +10,11 @@ return [
 
     'original'=>[
         'url' => env('ORIGINAL_URL', null),
+        'furl' => env('FIRST_URL', null),
     ],
     'kz'=>[
         'createpropic_address' => env('PROPIC_ADDRESS', null),
+        'createdevicesinfo_address' => env('DEVICESINFO_ADDRESS', null),
     ]
 
 ];
