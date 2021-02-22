@@ -231,36 +231,32 @@ class PublicController extends Controller
         }
         return response()->json($res);
     }
-    function getData(&$v){
+    function getData(&$v,$project_id){
 
-        $v['position'] = ProjectsPositions::find($v["monitorId"]);
 
-        $data = $this->getProjectThreshold($v['position']['project_id']);
-        $thresholdinfo_data = json_decode($data->thresholdinfo,true);
-        $v['position']['tag']  =  1;
-        if($v){
-            if($thresholdinfo_data){
-                foreach ($thresholdinfo_data as $k => $vv){
-                    if($k == 'co2' || $k == 'pm25'){
-                        $k = strtoupper($k);
-                    }
-                    $arr = explode('~',$vv);
-                    switch ($v[$k]){
-                        case $v[$k] < $arr[0]:
-                            $v[$k.'_tag'] = 1;
-                            break;
-                        case $v[$k] >= $arr[0] && $v[$k] < $arr[1]:
-                            $v[$k.'_tag'] = 2;
-                            $v['position']['tag'] == 1 && $res['position']['tag'] = 2;
-                            break;
-                        case $v[$k] >= $arr[1]:
-                            $v[$k.'_tag'] =  3;
-                            $v['position']['tag'] == 1 || $v['position']['tag'] == 2 && $v['position']['tag'] = 3;
-                            break;
-                    }
+        $data = $this->getProjectThreshold($project_id);
+        if($data){
+            $thresholdinfo_data = json_decode($data->thresholdinfo,true);
+            foreach ($thresholdinfo_data as $k => $vv){
+                if($k == 'co2' || $k == 'pm25'){
+                    $k = strtoupper($k);
+                }
+                $arr = explode('~',$vv);
+                switch ($v[$k]){
+                    case $v[$k] < $arr[0]:
+                        $v[$k.'_tag'] = 1;
+                        break;
+                    case $v[$k] >= $arr[0] && $v[$k] < $arr[1]:
+                        $v[$k.'_tag'] = 2;
+                        break;
+                    case $v[$k] >= $arr[1]:
+                        $v[$k.'_tag'] =  3;
+                        break;
                 }
             }
         }
+
+
     }
     /**
      * @param Request $request
@@ -268,30 +264,55 @@ class PublicController extends Controller
      * 批量获取监测点最新的数据
      */
     public function getNewPositionDatas(Request $request){
+        $tmp_arr=explode(',',$request->monitorIds);
+        $ProjectsPositions=ProjectsPositions::whereIn("id",$tmp_arr)->get()->toArray();
 
-        $params["monitorIds"]= $request->monitorIds;
-        $params["startTime"]= date( 'Y-m-d H:i:s', strtotime('-1 month'));
-        $params["endTime"]  = date("Y-m-d H:i:s");
+        $newarr = [];
 
-        $url=config("javasource.original.furl");
-        $result = Common::curl($url, $params, false);
-        $res = [];
-        if(!empty($result)){
-            $tmp=json_decode($result,true);
-            if($tmp["body"]){
-                /*foreach ($tmp["body"]["list"] as $k=>&$v){
-                    //判断指标是否污染
-                    $v["red"]=$this->getRed($v);
-                }*/
-                $res['data'] = $tmp["body"];
-                foreach ($res['data'] as $k=>&$v){
-                    $this->getData($v);
+        foreach ($ProjectsPositions as $k=>$v){
+            $tag = Tag::where('model_type',3)->where('model_id',$v["id"])->orderBy('id','desc')->first();
+            $v['position_tag'] =null;
+            $v['original']=null;
+            if($tag){
+                $v['position_tag'] = $tag->air_quality;
+                if(file_exists($tag["original_file"])){
+                    $files=file_get_contents($tag["original_file"]);
+                    $files_arr=json_decode($files,true);
+                    $files_arr_v=arrayToArrayKey($files_arr,"monitorId");
+                    $v['original']=$files_arr_v[$v["id"]];
+                    $this->getData($v['original'],$v["project_id"]);
                 }
-            }else{
-                $res['data'] = [];
+
             }
+            $kk = array_search($v['id'],$tmp_arr);
+            $newarr[$kk] = $v;
         }
-        return response()->json($res);
+//        $params["monitorIds"]= $request->monitorIds;
+//        $params["startTime"]= date( 'Y-m-d H:i:s', strtotime('-1 month'));
+//        $params["endTime"]  = date("Y-m-d H:i:s");
+//
+//        $url=config("javasource.original.furl");
+//        $result = Common::curl($url, $params, false);
+//        $res = [];
+//        if(!empty($result)){
+//            $tmp=json_decode($result,true);
+//            if($tmp["body"]){
+//                /*foreach ($tmp["body"]["list"] as $k=>&$v){
+//                    //判断指标是否污染
+//                    $v["red"]=$this->getRed($v);
+//                }*/
+//                $res['data'] = $tmp["body"];
+//                foreach ($res['data'] as $k=>&$v){
+//                    $this->getData($v);
+//                }
+//            }else{
+//                $res['data'] = [];
+//            }
+//        }
+
+
+
+        return response()->json($newarr);
 
 
     }
@@ -488,7 +509,8 @@ class PublicController extends Controller
     public function areas(Request $request,ProjectsAreas $projectsAreas){
         $project_id = $request->get('project_id','');
         $project_id && $projectsAreas = $projectsAreas->where('project_id',$project_id);
-        return new ProjectsAreasResource($projectsAreas->where('file','>',0)->orderBy('id','desc')->get());
+//        return new ProjectsAreasResource($projectsAreas->where('file','>',0)->orderBy('id','desc')->get());
+        return new ProjectsAreasResource($projectsAreas->orderBy('id','desc')->get());
     }
 
     //监测标准列表
